@@ -1,45 +1,43 @@
-# Module Overview
+terraform-azurerm-resource_group_storage
 
-This Terraform module deploys:
+A Terraform module to provision an Azure Resource Group and a Storage Account.
 
-- A resource group
-- A storage account
+Usage Example
 
-## Requirements
+module "rg_storage" {
+  source  = "LevAndrii/resource_group_storage/azurerm"
+  version = "1.0.3"
 
-- Terraform installed
-- Azure CLI or appropriate credentials configured
-
-## Input Variables
-
-| Variable              | Description                    | Type   |
-|-----------------------|--------------------------------|--------|
-| `rg_name`             | Name of the resource group     | string |
-| `rg_location`        | Location for the resource group | string |
-| `storage_account_name` | Name of the storage account    | string |
-
-## Usage Example
-
-```hcl
-module "basic_resources" {
-  source               = "./path_to_module"
-  rg_name              = "example-rg"
-  rg_location          = "West Europe"
-  storage_account_name = "examplestorageacct"
+  resource_group_name     = "example-rg"
+  location                = "East US"
+  storage_account_name    = "examplestorageacct"
 }
-```
 
-## Outputs
+Input Variables
 
-- `rg_id`: ID of the created resource group
-- `storage_account_id`: ID of the created storage account
+| Name                  | Type   | Required | Description                              |
+|-----------------------|--------|----------|------------------------------------------|
+| resource_group_name   | string | yes      | The name of the Azure Resource Group     |
+| location              | string | yes      | The Azure location for the Resource Group|
+| storage_account_name  | string | yes      | Unique name for the Storage Account      |
 
-## Steps to Deploy
+Outputs
 
-```bash
-terraform init
-terraform plan
-terraform apply
-```
+| Name                 | Description                               |
+|----------------------|-------------------------------------------|
+| resource_group_id    | The ID of the created Azure Resource Group |
+| storage_account_id   | The ID of the created Storage Account      |
 
-Type `yes` when prompted to confirm.
+Requirements
+
+- Terraform >= 1.0.0
+- AzureRM Provider >= 3.0.0
+
+Notes
+
+- The Storage Account name must be globally unique across Azure.
+- Make sure you have authenticated with the AzureRM provider before running the module.
+
+License
+
+This module is distributed under the MIT License. See the LICENSE file for details.
